@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id              String            @id
+  name            String            @unique
+  index           Int               @default(0)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  ProductCategory ProductCategory[]
+  // category   Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  // categories Category[] @relation("CategoryToCategory")
+  // products   Product[]
+  // CategoryGrouping CategoryGrouping[]
+
+  @@map("category")
+}
+
+model ProductCategory {
+  id        Int      @id @default(autoincrement())
+  cat_id    String
+  category  Category @relation(fields: [cat_id], references: [id])
+  prod_id   String
+  product   Product  @relation(fields: [prod_id], references: [id])
+  index     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Product {
+  id                String              @id
+  name              String              @unique
+  price             Decimal             @default(0.00)
+  availableStock    Int                 @default(0) @map("available_stock")
+  description       String              @db.Text
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
+  ProductCategory   ProductCategory[]
+  VariantGroup      VariantGroup[]
+  CartItem          CartItem[]
+  OrderItemReserved OrderItemReserved[]
+  Variant           Variant[]
+
+  @@map("product")
+}
+
+model VariantGroup {
+  id        String   @id
+  name      String
+  prod_id   String
+  product   Product  @relation(fields: [prod_id], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Option    Option[]
+
+  VariantSelected VariantSelected[]
+}
+
+model Option {
+  id           String        @id
+  name         String
+  vgrp_id      String?
+  variantGroup VariantGroup? @relation(fields: [vgrp_id], references: [id], onDelete: SetNull)
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  VariantSelected VariantSelected[]
+}
+
+model Variant {
+  id              String            @id
+  prod_id         String
+  product         Product           @relation(fields: [prod_id], references: [id])
+  sku             String
+  description     String
+  inventory       Int               @default(0)
+  price           Decimal           @default(0.00)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  VariantSelected VariantSelected[]
+
+  // CartItemVariant CartItemVariant[]
+  CartItem CartItem[]
+}
+
+model VariantSelected {
+  vrnt_id      String
+  variant      Variant      @relation(fields: [vrnt_id], references: [id],onDelete: Cascade)
+  vgrp_id      String
+  variantGroup VariantGroup @relation(fields: [vgrp_id], references: [id])
+  optn_id      String
+  option       Option       @relation(fields: [optn_id], references: [id])
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+
+  @@id([vrnt_id, vgrp_id, optn_id])
+  @@unique([vrnt_id, vgrp_id])
+}
+
+model Cart {
+  id        String     @id
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  CartItem  CartItem[]
+}
+
+model CartItem {
+  id        String   @id
+  cart_id   String
+  cart      Cart     @relation(fields: [cart_id], references: [id])
+  prod_id   String
+  product   Product  @relation(fields: [prod_id], references: [id])
+  quantitiy Int      @default(0)
+  vrnt_id   String?
+  variant   Variant? @relation(fields: [vrnt_id], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
+model Order {
+  id                String              @id
+  total             Decimal             @default(0.00)
+  OrderItemReserved OrderItemReserved[]
+}
+
+model OrderItemReserved {
+  id          String   @id
+  order_id    String
+  order       Order    @relation(fields: [order_id], references: [id])
+  product_id  String
+  product     Product  @relation(fields: [product_id], references: [id])
+  description String
+  expiredAt   DateTime
+  price       Decimal  @default(0.00)
+}
+
+
+
+
+
+// model CartItemVariant {
+//   id           String   @id
+//   cart_item_id String
+//   cartItem     CartItem @relation(fields: [cart_item_id], references: [id])
+//   vrnt_id      String
+//   variant      Variant  @relation(fields: [vrnt_id], references: [id])
+// }
+
+// model CategoryGrouping {
+//   id              String        @id
+//   categoryId      String
+//   category        Category      @relation(fields: [categoryId], references: [id])
+//   categoryGroupId String
+//   categoryGroup   CategoryGroup @relation(fields: [categoryGroupId], references: [id])
+//   index           Int           @default(0)
+//   createdAt       DateTime      @default(now()) @map("created_at")
+//   updatedAt       DateTime      @updatedAt @map("updated_at")
+// }
+
+// model CategoryGroup {
+//   id String @id
+
+//   createdAt        DateTime           @default(now()) @map("created_at")
+//   updatedAt        DateTime           @updatedAt @map("updated_at")
+//   CategoryGrouping CategoryGrouping[]
+// }
