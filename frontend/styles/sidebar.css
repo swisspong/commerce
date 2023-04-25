@@ -1,0 +1,10 @@
+.sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: #27262C;
+}
+
+.nametopic{
+    display: inline-block;
+    white-space: nowrap;
+}
