@@ -11,6 +11,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Merchant {
+  id        String   @id
+  username  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+}
+
 model Category {
   id              String            @id
   name            String            @unique
@@ -95,7 +104,7 @@ model Variant {
 
 model VariantSelected {
   vrnt_id      String
-  variant      Variant      @relation(fields: [vrnt_id], references: [id],onDelete: Cascade)
+  variant      Variant      @relation(fields: [vrnt_id], references: [id], onDelete: Cascade)
   vgrp_id      String
   variantGroup VariantGroup @relation(fields: [vgrp_id], references: [id])
   optn_id      String
@@ -143,10 +152,6 @@ model OrderItemReserved {
   expiredAt   DateTime
   price       Decimal  @default(0.00)
 }
-
-
-
-
 
 // model CartItemVariant {
 //   id           String   @id

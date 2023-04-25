@@ -7,7 +7,6 @@ import { AddItemToCartSchema, CartIdSchema, ItemIdSchema, UpdateItemInCartSchema
 
 const router = express.Router();
 
-
 router.get('/', CreateCart);
 router.get('/:cart_id', validateRequest({ params: CartIdSchema }), GetCartInfoByCartId);
 router.delete('/cart_id', validateRequest({ params: CartIdSchema }), EmptyCart);
