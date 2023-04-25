@@ -1,0 +1,17 @@
+FROM node:18.12.1-alpine
+
+RUN apk update && apk add bash
+
+WORKDIR /app/backend
+
+COPY package.json .
+COPY prisma ./prisma/
+
+# RUN npm install && npx prisma generate
+RUN npm install
+# RUN npm install -g nodemon
+COPY . .
+
+EXPOSE 8000
+
+# CMD ["npm", "run","dev"]

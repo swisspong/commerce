@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.post('/', validateRequest({ body: CreateCategoriesSchema }), CreateCategory);
 router.get('/', GetAllCategory);
+
+
 router.put('/', validateRequest({ body: UpdateCategoriesSchema }), EditCategory);
 
 

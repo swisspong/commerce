@@ -1,0 +1,34 @@
+version: "3"
+services:
+  db:
+    image: mysql
+    container_name: db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      # MYSQL_USER: exampleuser
+      # MYSQL_PASSWORD: root
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+  # backend:
+  #   build:
+  #     dockerfile: Dockerfile.dev
+  #     context: ./backend
+  #   container_name: backend
+  #   ports:
+  #     - "8000:8000"
+  #   restart: always
+  #   depends_on:
+  #     - "db"
+  #   volumes:
+  #     - .:/app
+  #     - /app/backend/node_modules
+
+  #   env_file:
+  #     - ./backend/.env
+  #   command: npm run dev

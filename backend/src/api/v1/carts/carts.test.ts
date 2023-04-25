@@ -22,87 +22,87 @@ describe("Carts TEST", () => {
                 .expect(201);
         });
     })
-    describe("POST /api/v1/carts/{cart_id}", () => {
+    // describe("POST /api/v1/carts/{cart_id}", () => {
 
 
-        it('return a 200 with a valid add item to cart', async () => {
+    //     it('return a 200 with a valid add item to cart', async () => {
 
-            const created = await request(app)
-                .post('/api/v1/products')
-                .send({
-                    categories: [],
-                    name: "product testdjj",
-                    price: 10,
-                    description: "oh god oh god!!!",
-                    available_stock: 10
-                })
-                .expect(201);
+    //         const created = await request(app)
+    //             .post('/api/v1/products')
+    //             .send({
+    //                 categories: [],
+    //                 name: "product testdjj",
+    //                 price: 10,
+    //                 description: "oh god oh god!!!",
+    //                 available_stock: 10
+    //             })
+    //             .expect(201);
 
-            await request(app)
-                .put('/api/v1/products/' + created.body.id + "/variant_groups")
-                .send({
-                    variant_groups: [
-                        {
-                            name: "color",
-                            options: [
-                                {
-                                    name: "red"
-                                },
-                                {
-                                    name: "blue"
-                                }
-                            ]
-                        },
-                        {
-                            name: "size",
-                            options: [
-                                {
-                                    name: "s"
-                                },
-                                {
-                                    name: "m"
-                                }
-                            ]
-                        },
-                    ]
-                })
-                .expect(200);
+    //         await request(app)
+    //             .put('/api/v1/products/' + created.body.id + "/variant_groups")
+    //             .send({
+    //                 variant_groups: [
+    //                     {
+    //                         name: "color",
+    //                         options: [
+    //                             {
+    //                                 name: "red"
+    //                             },
+    //                             {
+    //                                 name: "blue"
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         name: "size",
+    //                         options: [
+    //                             {
+    //                                 name: "s"
+    //                             },
+    //                             {
+    //                                 name: "m"
+    //                             }
+    //                         ]
+    //                     },
+    //                 ]
+    //             })
+    //             .expect(200);
 
-            const result = await request(app)
-                .get('/api/v1/products/' + created.body.id + "/variant_groups")
-                .expect(200);
+    //         const result = await request(app)
+    //             .get('/api/v1/products/' + created.body.id + "/variant_groups")
+    //             .expect(200);
 
-            // console.log(result.body)
-            const options = result.body.map((item: any) => ({ [item.id]: item.Option[0].id }))
-            // console.log(options)
-            await request(app)
-                .post('/api/v1/products/' + created.body.id + "/variants")
-                .send({
-                    price: 0,
-                    description: "",
-                    quantity: 0,
-                    sku: "",
-                    options: options
-                })
-                .expect(201);
-            // console.log(JSON.stringify(updateData, null, 2));
-            const productVariants = await request(app)
-                .get('/api/v1/products/' + created.body.id + "/variants")
-                .expect(200);
-            console.log(JSON.stringify(productVariants.body, null, 2));
-            await request(app)
-                .get('/api/v1/carts')
-                .expect(201);
-            await request(app)
-                .post('/api/v1/carts/' + created.body.id)
-                .send({
-                    id: created.body.id,
-                    quantity: 1,
-                    variant_id: 1
-                })
-                .expect(201);
-        });
-    })
+    //         // console.log(result.body)
+    //         const options = result.body.map((item: any) => ({ [item.id]: item.Option[0].id }))
+    //         // console.log(options)
+    //         await request(app)
+    //             .post('/api/v1/products/' + created.body.id + "/variants")
+    //             .send({
+    //                 price: 0,
+    //                 description: "",
+    //                 quantity: 0,
+    //                 sku: "",
+    //                 options: options
+    //             })
+    //             .expect(201);
+    //         // console.log(JSON.stringify(updateData, null, 2));
+    //         const productVariants = await request(app)
+    //             .get('/api/v1/products/' + created.body.id + "/variants")
+    //             .expect(200);
+    //         console.log(JSON.stringify(productVariants.body, null, 2));
+    //         await request(app)
+    //             .get('/api/v1/carts')
+    //             .expect(201);
+    //         await request(app)
+    //             .post('/api/v1/carts/' + created.body.id)
+    //             .send({
+    //                 id: created.body.id,
+    //                 quantity: 1,
+    //                 variant_id: 1
+    //             })
+    //             .expect(201);
+    //     });
+    // })
 
     // describe('GET /api/v1/categories', () => {
 

@@ -14,14 +14,24 @@ export const AddItemToCartSchema = z.object({
     quantity: z.number(),
     variant_id: z.string().nullable().optional().default(null)
 })
+
+
+
+
+
+
 export const UpdateItemInCartSchema = AddItemToCartSchema.omit({ id: true })
 export const CartIdSchema = z.object({ cart_id: z.string().trim().min(19).refine(value => /^cart_\w{15}$/.test(value)) })
 export const ItemIdSchema = CartIdSchema.extend({
     item_id: z.string().trim().min(19).refine(value => /^item_\w{15}$/.test(value))
 })
 
+
+
+
 export type TAddItemToCart = z.infer<typeof AddItemToCartSchema>
 export type TUpdateItemInCart = z.infer<typeof UpdateItemInCartSchema>
+
 export type TCartId = z.infer<typeof CartIdSchema>
 export type TItemId = z.infer<typeof ItemIdSchema>
 

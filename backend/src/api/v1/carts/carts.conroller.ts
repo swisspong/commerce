@@ -180,8 +180,9 @@ export const GetCartInfoByCartId = async (req: Request, res: Response, next: Nex
         const eCart = await prisma.cart.findUnique({ where: { id: cart_id }, include: { CartItem: true } })
         if (!eCart || eCart.CartItem.length <= 0) {
             throw new NotFoundError()
+            // throw new NotFoundError()
         }
-
+        //fdsfds
         res.json(eCart)
 
     } catch (error) {

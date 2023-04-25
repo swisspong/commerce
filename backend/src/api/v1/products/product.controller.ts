@@ -27,7 +27,7 @@ export const CreateProduct = async (req: Request, res: Response, next: NextFunct
         const uid = new ShortUniqueId();
         // const relateCategory = data.categories.map((item) => ({ cat_id: item.id, index: item.index }))
         const relateCategory = data.categories.map((item, index) => ({ cat_id: item.id, index }))
-        
+
         const result = await prisma.product.create({
             data: {
                 id: `prod_${uid.stamp(15)}`,
