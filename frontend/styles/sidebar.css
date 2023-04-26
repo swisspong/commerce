@@ -5,6 +5,22 @@
 }
 
 .nametopic{
-    display: inline-block;
-    white-space: nowrap;
+    display: flex;
+    text-align: center;
+    font-size: 53px;
+    padding: 25px 0px 0px 35px;
 }
+
+.text-topic-1{
+    color: aliceblue;
+}
+
+.text-topic-2{
+    color: #BE6AFF;
+}
+
+.text-topic-3{
+    color: aliceblue;
+}
+
+
