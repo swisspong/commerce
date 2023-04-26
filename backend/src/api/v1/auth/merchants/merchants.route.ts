@@ -1,14 +1,14 @@
 import express from "express";
-// import { CustomerSignin, CustomerSignout, CustomerSignup } from "./customers.controller";
 import { validateRequest } from "../../../../middlewares/validateRequest";
-import { MerchantSigninSchema, MerchantSignupSchema } from "./merchants.model";
-import { MerchantSignin, MerchantSignout, MerchantSignup } from "./merchants.controller";
-// import { CustomerSigninSchema, CustomerSignupSchema } from "./customers.model";
+import { MerchantSignin, MerchantSignup } from "./merchants.controller";
+import { SigninSchema, SignupSchema } from "../shared/auth.model";
+import { Signout } from "../shared/auth.controller";
+
 
 const router = express.Router();
 
-router.post('/signup', validateRequest({ body: MerchantSignupSchema }), MerchantSignup);
-router.post('/signin', validateRequest({ body: MerchantSigninSchema }), MerchantSignin);
-router.post('/signout', MerchantSignout);
+router.post('/signup', validateRequest({ body: SignupSchema }), MerchantSignup);
+router.post('/signin', validateRequest({ body: SigninSchema }), MerchantSignin);
+router.post('/signout', Signout);
 
 export { router as AuthMerchantsRoute }
