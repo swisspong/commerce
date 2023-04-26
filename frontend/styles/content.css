@@ -1,6 +1,45 @@
 .contentheader{
     color: aliceblue;
     font-size: 30px;
-    padding: 80px 10px 20px 350px;
+    padding: 80px 10px 20px 370px;
     font-weight: 400;
+}
+.contentbody{
+    display: flex;
+    padding: 0px 10px 20px 350px;
+}
+.card{
+    background-color: #654E92 ;
+    height: 200px;
+    width: 340px;
+    border-radius: 10px;
+    margin-left: 20px;
+    
+}
+.card-header{
+    color: white;
+    font-size: 20px;
+    display: flex;
+    padding-top: 15px;
+    justify-content: space-around;
+    align-items: center;
+}
+.box-icons{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: #351770;
+}
+.icons{
+    width: 50px;
+    margin-top: 5px;
+    margin-left: 5px;
+    
+}
+.card-body{
+    color: white;
+    font-size: 28px;
+    font-weight: 500;
+    padding-left: 42px;
+    display: flex;
 }
