@@ -3,13 +3,15 @@
     width: 300px;
     height: 100vh;
     background-color: #27262C;
+    box-shadow: 0px 0px 10px 0px #00000045;
 }
 
 .nametopic{
     display: flex;
     text-align: center;
-    font-size: 53px;
-    padding: 25px 0px 0px 35px;
+    font-size: 45px;
+    padding: 20px 0px 0px 53px;
+    z-index: 1;
 }
 
 .text-topic-1{
@@ -24,4 +26,56 @@
     color: aliceblue;
 }
 
+.nametopic-lighting{
+    position: absolute;
+    display: flex;
+    opacity: 30%;
+    filter: blur(20px);
+}
+
+.hide-text{
+    color: #ffffff00;
+}
+
+.box-name-store{
+    transition: 0.5s;
+    position: absolute;
+    margin: 20px 0px 0px 20px;
+    width: 260px;
+    height: 60px;
+    background-color: #402a6b;
+    border-radius: 6px;
+    box-shadow: 0px 3px 7px 0px #00000069;
+    display: flex;
+}
+
+.box-name-store:hover{
+    transform: translateY(-5px);
+    cursor: pointer;
+    background-color: #51328f;
+}
+
+.img-name-store{
+    margin: 5px 5px 0px 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
+.name-store-and-hashtag{
+    margin-top: 7px;
+    margin-left: 10px;
+    
+}
+
+.name-store{
+    color: #FFFFFF;
+    font-weight: 600;   
+}
+
+.hashtag-store{
+    color: #a58bda;
+    font-weight: 600;
+    font-size: 13px;  
+}
 

@@ -4,18 +4,16 @@ import ShortUniqueId from "short-unique-id";
 import jwt from "jsonwebtoken";
 import { BadRequestError } from "../../../../errors/bad-request-error";
 import bcrypt from "bcryptjs"
-
 import { TSignin, TSignup } from "../shared/auth.model";
-
 
 const prisma = new PrismaClient()
 
-export const CustomerSignup = async (req: Request, res: Response, next: NextFunction) => {
+export const MerchantSignup = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password, username } = <TSignup>req.body
         const uid = new ShortUniqueId();
 
-        const eCustomer = await prisma.customer.findUnique({
+        const eCustomer = await prisma.merchant.findUnique({
             where: { email }
         })
 
@@ -27,9 +25,9 @@ export const CustomerSignup = async (req: Request, res: Response, next: NextFunc
         const hash = bcrypt.hashSync(password, salt);
 
 
-        const credential = await prisma.customer.create({
+        const credential = await prisma.merchant.create({
             data: {
-                id: `cstmr_${uid.stamp(15)}`,
+                id: `mrct_${uid.stamp(15)}`,
                 username,
                 email,
                 password: hash
@@ -55,11 +53,11 @@ export const CustomerSignup = async (req: Request, res: Response, next: NextFunc
         next(error)
     }
 }
-export const CustomerSignin = async (req: Request, res: Response, next: NextFunction) => {
+export const MerchantSignin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = <TSignin>req.body
 
-        const eCustomer = await prisma.customer.findUnique({
+        const eCustomer = await prisma.merchant.findUnique({
             where: { email }
         })
 
