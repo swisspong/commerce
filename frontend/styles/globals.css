@@ -1,4 +1,5 @@
 @import "sidebar.css";
+@import "content.css";
 
 @tailwind base;
 @tailwind components;
@@ -6,13 +7,13 @@
 
 /* :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 3, 1, 5;
+  --background-end-rgb: 3, 4, 4;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: red) {
   :root {
-    --foreground-rgb: 255, 255, 255;
+    --foreground-rgb: 5, 1, 6;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
@@ -26,4 +27,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-} */
+}
+ */
+
+body {
+  background-color: #1B142B;
+}
