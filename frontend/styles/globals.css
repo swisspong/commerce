@@ -1,4 +1,5 @@
 @import "sidebar.css";
+@import "content.css";
 
 @tailwind base;
 @tailwind components;
