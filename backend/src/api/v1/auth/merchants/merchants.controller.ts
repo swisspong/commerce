@@ -1,17 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import ShortUniqueId from "short-unique-id";
+// import { TCustomerSignin, TCustomerSignup } from "./customers.model";
 import jwt from "jsonwebtoken";
 import { BadRequestError } from "../../../../errors/bad-request-error";
 import bcrypt from "bcryptjs"
-import { TCustomerSignin, TCustomerSignup } from "./customers.model";
-
+import { TMerchantSignin, TMerchantSignup } from "./merchants.model";
 
 const prisma = new PrismaClient()
 
-export const CustomerSignup = async (req: Request, res: Response, next: NextFunction) => {
+export const MerchantSignup = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { email, password, username } = <TCustomerSignup>req.body
+        const { email, password, username } = <TMerchantSignup>req.body
         const uid = new ShortUniqueId();
 
         const eCustomer = await prisma.merchant.findUnique({
@@ -54,9 +54,9 @@ export const CustomerSignup = async (req: Request, res: Response, next: NextFunc
         next(error)
     }
 }
-export const CustomerSignin = async (req: Request, res: Response, next: NextFunction) => {
+export const MerchantSignin = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { email, password } = <TCustomerSignin>req.body
+        const { email, password } = <TMerchantSignin>req.body
 
         const eCustomer = await prisma.merchant.findUnique({
             where: { email }
@@ -92,7 +92,7 @@ export const CustomerSignin = async (req: Request, res: Response, next: NextFunc
         next(error)
     }
 }
-export const CustomerSignout = async (req: Request, res: Response, next: NextFunction) => {
+export const MerchantSignout = async (req: Request, res: Response, next: NextFunction) => {
     try {
         req.session = null;
         res.json({});

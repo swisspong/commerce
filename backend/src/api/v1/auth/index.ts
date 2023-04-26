@@ -1,7 +1,11 @@
 import express from "express";
-import { AuthCustomersRoute } from "./customers/customers.route";
-const router = express.Router()
-router.use('/customers', AuthCustomersRoute);
+import { AuthMerchantsRoute } from "./merchants/merchants.route";
+import { AuthCustomersRoute } from "./customers/customer.route";
+
+const router = express.Router();
+
+router.use('/merchants',AuthMerchantsRoute );
+router.use('/cusotmers',AuthCustomersRoute );
 
 
-export { router as AuthRouter }
+export { router as ProductRoute }

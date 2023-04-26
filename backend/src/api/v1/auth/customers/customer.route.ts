@@ -1,6 +1,6 @@
 import express from "express";
-import { CustomerSignin, CustomerSignout, CustomerSignup } from "./customers.controller";
 import { validateRequest } from "../../../../middlewares/validateRequest";
+import { CustomerSignin, CustomerSignout, CustomerSignup } from "./customers.controller";
 import { CustomerSigninSchema, CustomerSignupSchema } from "./customers.model";
 
 const router = express.Router();

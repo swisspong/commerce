@@ -1,4 +1,3 @@
-
 import * as z from "zod"
 
 export const CustomerSignupSchema = z.object({
@@ -13,6 +12,3 @@ export const CustomerSigninSchema = z.object({
 
 export type TCustomerSignup = z.infer<typeof CustomerSignupSchema>
 export type TCustomerSignin = z.infer<typeof CustomerSigninSchema>
-
-
-
