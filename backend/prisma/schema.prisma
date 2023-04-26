@@ -153,6 +153,51 @@ model OrderItemReserved {
   price       Decimal  @default(0.00)
 }
 
+model Admin {
+  id        String      @id
+  username  String
+  email     String      @unique
+  password  String
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  AdminRole AdminRole[]
+}
+
+model Permission {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  description    String
+  rolePermission RolePermission[]
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+}
+
+model Role {
+  id             Int              @id @default(autoincrement())
+  name           String
+  permission_id  Int
+  rolePermission RolePermission[]
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  AdminRole AdminRole[]
+}
+
+model RolePermission {
+  id            Int        @id @default(autoincrement())
+  role_id       Int
+  role          Role       @relation(fields: [role_id], references: [id])
+  permission_id Int
+  permission    Permission @relation(fields: [permission_id], references: [id])
+}
+
+model AdminRole {
+  id      Int   @id @default(autoincrement())
+  roleId  Int
+  role    Role  @relation(fields: [roleId], references: [id])
+  adminId String
+  admin   Admin @relation(fields: [adminId], references: [id])
+}
+
 // model CartItemVariant {
 //   id           String   @id
 //   cart_item_id String
