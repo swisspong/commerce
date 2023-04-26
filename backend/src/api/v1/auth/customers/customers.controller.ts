@@ -14,7 +14,7 @@ export const CustomerSignup = async (req: Request, res: Response, next: NextFunc
         const { email, password, username } = <TCustomerSignup>req.body
         const uid = new ShortUniqueId();
 
-        const eCustomer = await prisma.merchant.findUnique({
+        const eCustomer = await prisma.customer.findUnique({
             where: { email }
         })
 
@@ -26,7 +26,7 @@ export const CustomerSignup = async (req: Request, res: Response, next: NextFunc
         const hash = bcrypt.hashSync(password, salt);
 
 
-        const credential = await prisma.merchant.create({
+        const credential = await prisma.customer.create({
             data: {
                 id: `mrct_${uid.stamp(15)}`,
                 username,
@@ -58,7 +58,7 @@ export const CustomerSignin = async (req: Request, res: Response, next: NextFunc
     try {
         const { email, password } = <TCustomerSignin>req.body
 
-        const eCustomer = await prisma.merchant.findUnique({
+        const eCustomer = await prisma.customer.findUnique({
             where: { email }
         })
 
