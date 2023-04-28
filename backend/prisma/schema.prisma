@@ -184,7 +184,7 @@ model ItemReserved {
   variant     Variant? @relation(fields: [vrnt_id], references: [id], onDelete: SetNull)
   name        String
   description String
-  quantity    String
+  quantity    Int
   total       Decimal  @default(0.00)
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
