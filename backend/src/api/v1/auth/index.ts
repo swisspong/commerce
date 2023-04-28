@@ -8,4 +8,4 @@ router.use('/merchants',AuthMerchantsRoute );
 router.use('/cusotmers',AuthCustomersRoute );
 
 
-export { router as ProductRoute }
+export { router as AuthRoute }

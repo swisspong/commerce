@@ -19,6 +19,7 @@ model Merchant {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
+
 model Customer {
   id        String   @id
   username  String
@@ -27,7 +28,6 @@ model Customer {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 }
-
 
 model Category {
   id              String            @id
@@ -68,6 +68,7 @@ model Product {
   CartItem          CartItem[]
   OrderItemReserved OrderItemReserved[]
   Variant           Variant[]
+  ItemReserved      ItemReserved[]
 
   @@map("product")
 }
@@ -108,7 +109,9 @@ model Variant {
   VariantSelected VariantSelected[]
 
   // CartItemVariant CartItemVariant[]
-  CartItem CartItem[]
+  CartItem          CartItem[]
+  OrderItemReserved OrderItemReserved[]
+  ItemReserved      ItemReserved[]
 }
 
 model VariantSelected {
@@ -157,9 +160,34 @@ model OrderItemReserved {
   order       Order    @relation(fields: [order_id], references: [id])
   product_id  String
   product     Product  @relation(fields: [product_id], references: [id])
+  vrnt_id     String?
+  variant     Variant? @relation(fields: [vrnt_id], references: [id], onDelete: SetNull)
   description String
   expiredAt   DateTime
   price       Decimal  @default(0.00)
+}
+
+model Checkout {
+  id           String         @id
+  expiredAt    DateTime
+  total        Decimal        @default(0.00)
+  ItemReserved ItemReserved[]
+}
+
+model ItemReserved {
+  id          String   @id
+  chkt_id     String
+  checkout    Checkout @relation(fields: [chkt_id], references: [id])
+  product_id  String?
+  product     Product? @relation(fields: [product_id], references: [id], onDelete: SetNull)
+  vrnt_id     String?
+  variant     Variant? @relation(fields: [vrnt_id], references: [id], onDelete: SetNull)
+  name        String
+  description String
+  quantity    String
+  total       Decimal  @default(0.00)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 }
 
 model Admin {
@@ -186,9 +214,9 @@ model Role {
   name           String
   permission_id  Int
   rolePermission RolePermission[]
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  AdminRole AdminRole[]
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+  AdminRole      AdminRole[]
 }
 
 model RolePermission {
@@ -200,11 +228,11 @@ model RolePermission {
 }
 
 model AdminRole {
-  id      Int   @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   roleId  Int
-  role    Role  @relation(fields: [roleId], references: [id])
+  role    Role   @relation(fields: [roleId], references: [id])
   adminId String
-  admin   Admin @relation(fields: [adminId], references: [id])
+  admin   Admin  @relation(fields: [adminId], references: [id])
 }
 
 // model CartItemVariant {
