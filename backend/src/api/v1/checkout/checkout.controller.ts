@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs"
 import { TCartId } from "../carts/carts.model";
 import { BadRequestError } from "../../../errors/bad-request-error";
 import { NotFoundError } from "../../../errors/not-found-error";
+import { ICrItemReserved } from "./checkout.model";
 
 
 

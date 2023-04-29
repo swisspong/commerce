@@ -4,6 +4,7 @@ import { PermissionRoute } from "./permissions/permissions.route";
 import { RoleRoute } from "./roles/roles.route";
 import { AdminIdSchema, CreateAdminSchema } from "./admin.model";
 import { CreateAdmin, GetAdminAll ,GetAdminById, RemoveAdminById, EditAdmin} from "./admin.controller";
+import { AuthorizationRoute } from "./authorization/authorization.route";
 
 
 
@@ -11,6 +12,8 @@ const router = express.Router();
 
 router.use('/permissions', PermissionRoute)
 router.use('/roles', RoleRoute);
+router.use('/:admin_id/authorization', AuthorizationRoute)
+
 
 router.post('/', validateRequest({body: CreateAdminSchema}) , CreateAdmin)
 router.get('/', GetAdminAll)

@@ -1,4 +1,4 @@
-interface ICrItemReserved {
+export interface ICrItemReserved {
 
     id: string;
     name: string;
@@ -9,3 +9,4 @@ interface ICrItemReserved {
     vrnt_id: string | null
 
 }
+
