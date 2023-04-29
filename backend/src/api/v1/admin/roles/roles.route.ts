@@ -1,5 +1,4 @@
 import express from "express";
-// import { CreateCategory, EditCategory, GetAllCategory } from "./categories.controller";
 import { validateRequest } from "../../../../middlewares/validateRequest"
 import { CreateRole, EditRole, GetRoleAll, GetRoleById, RemoveRoleById } from "./roles.conroller";
 import { CreateRoleSchema, RoleIdSchema } from "./roles.model";
