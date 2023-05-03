@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs"
 import { TCartId } from "../carts/carts.model";
 import { BadRequestError } from "../../../errors/bad-request-error";
 import { NotFoundError } from "../../../errors/not-found-error";
-import { ICrItemReserved } from "./checkout.model";
+import { ICrItemReserved, TCheckoutId } from "./checkout.model";
 
 
 
@@ -117,6 +117,20 @@ export const Checkout = async (req: Request, res: Response, next: NextFunction) 
 
         res.status(201).json(checkout)
 
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+
+export const CheckoutToCreateOrder = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { chkt_id } = <TCheckoutId>req.params
+
+
+
+        res.status(201).json(chkt_id)
     } catch (error) {
         console.log(error)
         next(error)

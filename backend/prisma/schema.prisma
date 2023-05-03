@@ -29,6 +29,18 @@ model Customer {
   updatedAt DateTime @updatedAt @map("updated_at")
 }
 
+model Asset {
+  id           String         @id
+  url          String         @unique
+  name         String
+  fileSize     Int            @default(0) @map("file_size")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  ProductAsset ProductAsset[]
+
+  @@map("asset")
+}
+
 model Category {
   id              String            @id
   name            String            @unique
@@ -55,6 +67,19 @@ model ProductCategory {
   updatedAt DateTime @updatedAt @map("updated_at")
 }
 
+model ProductAsset {
+  id         Int      @id @default(autoincrement())
+  product_id String?  @map("product_id")
+  product    Product? @relation(fields: [product_id], references: [id], onDelete: SetNull)
+  asset_id   String     @map("image_id")
+  asset      Asset    @relation(fields: [asset_id], references: [id])
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([product_id, asset_id])
+  @@map("product_asset")
+}
+
 model Product {
   id                String              @id
   name              String              @unique
@@ -69,6 +94,7 @@ model Product {
   OrderItemReserved OrderItemReserved[]
   Variant           Variant[]
   ItemReserved      ItemReserved[]
+  ProductAsset      ProductAsset[]
 
   @@map("product")
 }
