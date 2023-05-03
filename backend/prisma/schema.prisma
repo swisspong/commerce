@@ -71,7 +71,7 @@ model ProductAsset {
   id         Int      @id @default(autoincrement())
   product_id String?  @map("product_id")
   product    Product? @relation(fields: [product_id], references: [id], onDelete: SetNull)
-  asset_id   String     @map("image_id")
+  asset_id   String   @map("image_id")
   asset      Asset    @relation(fields: [asset_id], references: [id])
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
@@ -81,20 +81,20 @@ model ProductAsset {
 }
 
 model Product {
-  id                String              @id
-  name              String              @unique
-  price             Decimal             @default(0.00)
-  availableStock    Int                 @default(0) @map("available_stock")
-  description       String              @db.Text
-  createdAt         DateTime            @default(now()) @map("created_at")
-  updatedAt         DateTime            @updatedAt @map("updated_at")
-  ProductCategory   ProductCategory[]
-  VariantGroup      VariantGroup[]
-  CartItem          CartItem[]
-  OrderItemReserved OrderItemReserved[]
-  Variant           Variant[]
-  ItemReserved      ItemReserved[]
-  ProductAsset      ProductAsset[]
+  id              String            @id
+  name            String            @unique
+  price           Decimal           @default(0.00)
+  availableStock  Int               @default(0) @map("available_stock")
+  description     String            @db.Text
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  ProductCategory ProductCategory[]
+  VariantGroup    VariantGroup[]
+  CartItem        CartItem[]
+  OrderItem       OrderItem[]
+  Variant         Variant[]
+  ItemReserved    ItemReserved[]
+  ProductAsset    ProductAsset[]
 
   @@map("product")
 }
@@ -135,9 +135,9 @@ model Variant {
   VariantSelected VariantSelected[]
 
   // CartItemVariant CartItemVariant[]
-  CartItem          CartItem[]
-  OrderItemReserved OrderItemReserved[]
-  ItemReserved      ItemReserved[]
+  CartItem     CartItem[]
+  OrderItem    OrderItem[]
+  ItemReserved ItemReserved[]
 }
 
 model VariantSelected {
@@ -175,22 +175,24 @@ model CartItem {
 }
 
 model Order {
-  id                String              @id
-  total             Decimal             @default(0.00)
-  OrderItemReserved OrderItemReserved[]
+  id        String      @id
+  total     Decimal     @default(0.00)
+  OrderItem OrderItem[]
 }
 
-model OrderItemReserved {
+model OrderItem {
   id          String   @id
   order_id    String
   order       Order    @relation(fields: [order_id], references: [id])
-  product_id  String
-  product     Product  @relation(fields: [product_id], references: [id])
+  product_id  String?
+  product     Product? @relation(fields: [product_id], references: [id], onDelete: SetNull)
+  quantity    Int
   vrnt_id     String?
   variant     Variant? @relation(fields: [vrnt_id], references: [id], onDelete: SetNull)
   description String
-  expiredAt   DateTime
-  price       Decimal  @default(0.00)
+  subtotal    Decimal  @default(0.00)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
 }
 
 model Checkout {

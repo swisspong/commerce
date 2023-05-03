@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import ShortUniqueId from "short-unique-id";
 import jwt from "jsonwebtoken";
@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs"
 import { TCartId } from "../carts/carts.model";
 import { BadRequestError } from "../../../errors/bad-request-error";
 import { NotFoundError } from "../../../errors/not-found-error";
-import { ICrItemReserved, TCheckoutId } from "./checkout.model";
+import { ICrItemReserved, TCheckoutId, TCreateOrder } from "./checkout.model";
 
 
 
@@ -127,10 +127,27 @@ export const Checkout = async (req: Request, res: Response, next: NextFunction) 
 export const CheckoutToCreateOrder = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { chkt_id } = <TCheckoutId>req.params
+        const body = <TCreateOrder>req.body
+        const uid = new ShortUniqueId();
+        const eChkt = await prisma.checkout.findUnique({ where: { id: chkt_id }, include: { ItemReserved: true } })
 
+        if (!eChkt)
+            throw new NotFoundError();
+        const items = eChkt.ItemReserved.map(item => ({ id: `oitm_${uid.stamp(15)}`, description: item.description, product_id: item.product_id, vrnt_id: item.vrnt_id, subtotal: item.total, quantity: item.quantity }))
+       const order= await prisma.order.create({
+            data: {
+                id: `order_${uid.stamp(15)}`,
+                total: eChkt.total,
+                OrderItem: {
+                    createMany: {
+                        data: items
+                        //  data:[{id:'',description:"",product_id:"",vrnt_id:"",subtotal:0,quantity:0}]
+                    }
+                }
+            }
+        })
 
-
-        res.status(201).json(chkt_id)
+        res.status(201).json(order)
     } catch (error) {
         console.log(error)
         next(error)
