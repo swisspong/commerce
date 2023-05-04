@@ -46,7 +46,7 @@ export const MerchantSignup = async (req: Request, res: Response, next: NextFunc
         }
 
         const { password: _, ...newObj } = credential;
-        res.status(201).json(newObj);
+        res.status(201).json();
 
     } catch (error) {
         console.log(error)
@@ -58,7 +58,8 @@ export const MerchantSignin = async (req: Request, res: Response, next: NextFunc
         const { email, password } = <TSignin>req.body
 
         const eCustomer = await prisma.merchant.findUnique({
-            where: { email }
+            where: { email },
+            select: { email: true, id: true, password: true, username: true }
         })
 
         if (!eCustomer) {
@@ -84,7 +85,7 @@ export const MerchantSignin = async (req: Request, res: Response, next: NextFunc
         }
 
         const { password: _, ...newObj } = eCustomer;
-        res.status(200).json(newObj);
+        res.status(200).json({ ...newObj });
 
     } catch (error) {
         console.log(error)

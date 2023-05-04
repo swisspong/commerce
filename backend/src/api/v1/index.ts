@@ -6,10 +6,12 @@ import { AdminRoute } from './admin/admin.route';
 import { CheckoutRoute } from './checkout/checkout.route';
 import { AuthRoute } from './auth';
 import { AssetsRoute } from './assets/assets.route';
+import { MerchantsRoute } from './merchants/merchants.route';
 
 
 const router = express.Router();
 
+router.use("/merchants",MerchantsRoute)
 router.use('/products', ProductRoute);
 router.use('/categories', CategoryRoute)
 router.use('/carts', CartsRoute)
