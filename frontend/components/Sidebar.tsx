@@ -1,5 +1,8 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import {
+  CurrencyDollarIcon
+} from "@heroicons/react/24/outline";
 
 export default function Sidebar() {
   return (
