@@ -1,3 +1,5 @@
+
+
 import Image from "next/image";
 import axios from "axios";
 import { Inter } from "next/font/google";
@@ -14,7 +16,7 @@ import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Merchant() {
+export default function ProductAdd() {
   const router = useRouter();
   const { data, refetch, error, isError } = useGetMerchantInfo();
   const { mutate: signout, isSuccess } = useMerchantSignout();
@@ -24,13 +26,13 @@ export default function Merchant() {
 
   return (
     <>
-      <h1 className="text-blue-400 text-lg">Dashboard</h1>
+      <h1 className="text-blue-400 text-lg">Product List Page</h1>
       <br />
       <p className="text-blue-200">{JSON.stringify(data, null)}</p>
-      <br />
+      
       <button
         type="button"
-        className="block text-white bg-blue-400 px-2 py-1"
+        className=" text-white bg-blue-400 px-2 py-1"
         onClick={() => signout()}
       >
         Signout
@@ -49,17 +51,11 @@ export default function Merchant() {
       >
         Refetch
       </button>
-      <br />
-      <label className="block text-blue-300 font-bold ">Menu</label>
-      <ul>
-        <Link href="merchants/products">
-          <li>
-            <button className="block text-white bg-blue-400 px-2 py-1">
-              Product List Page
-            </button>
-          </li>
-        </Link>
-      </ul>
+      <Link href="/merchants/products/add">
+        <button className="block text-white bg-blue-400 px-2 py-1">
+          Add Product
+        </button>
+      </Link>
     </>
   );
 }

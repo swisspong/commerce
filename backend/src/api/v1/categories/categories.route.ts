@@ -1,10 +1,10 @@
-import express from "express";
+import { Router } from "express";
 import { CreateCategory, EditCategory, GetAllCategory } from "./categories.controller";
 import { validateRequest } from "../../../middlewares/validateRequest";
 import { CreateCategoriesSchema, UpdateCategoriesSchema } from "./categories.model";
 
 
-const router = express.Router();
+const router = Router();
 
 router.post('/', validateRequest({ body: CreateCategoriesSchema }), CreateCategory);
 router.get('/', GetAllCategory);
